@@ -54,7 +54,7 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
 final function int AddText( string Input, color TextColor, byte TextAlign, byte FontSize, out byte NumSkips )
 {
 	local int i;
-	
+
 	i = Lines.Length;
 	Lines.Length = i+1;
 	Lines[i].Text = Input;
@@ -137,12 +137,12 @@ final function AddImage( string Input )
 	Y = int(GetOption(Input, "HSPACE="));
 	XS = int(GetOption(Input, "WIDTH="));
 	YS = int(GetOption(Input, "HEIGHT="));
-	
+
 	if( XS==0 )
 		XS = M.MaterialUSize();
 	if( YS==0 )
 		YS = M.MaterialVSize();
-	
+
 	i = Images.Length;
 	Images.Length = i+1;
 	Images[i].Img = M;
@@ -172,14 +172,14 @@ final function SetContents( string Input )
 	TitleString = "";
 	bHasSplitLines = false;
 	bNeedsInit = true;
-	
+
 	// First remove new liners
 	Input = Repl(Input, Chr(13)$Chr(10), "");
 	Input = Repl(Input, Chr(13), "");
 	Input = Repl(Input, Chr(10), "");
 	Input = Repl(Input, Chr(9), "    ");
 	Input = Repl(Input, "\\n", "<BR>");
-	
+
 	TextColor = Class'HUD'.Default.WhiteColor;
 	OrgTextColor = Class'HUD'.Default.WhiteColor;
 	LinkColor = Class'HUD'.Default.BlueColor;
@@ -234,14 +234,14 @@ final function SetContents( string Input )
 				TextColor = ParseColor(Temp);
 				OrgTextColor = TextColor;
 			}
-			
+
 			Temp = GetOption(HTML, "SIZE=");
 			if (Temp != "")
 			{
 				FontScaler = int(Temp);
 				DefaultFontSize = FontScaler;
 			}
-			
+
 			Temp = GetOption(Input, "IMG=");
 			if (Temp != "")
 			{
@@ -548,7 +548,7 @@ final function Color ParseColor(string S)
 final function byte GetHexDigit(string D)
 {
 	local byte i;
-	
+
 	i = Asc(D);
 	if( i>=48 && i<=57 ) // i>='0' && i<='9'
 		return (i-48); // i-'0'
@@ -606,7 +606,7 @@ final protected function InitHTMLArea( Canvas C )
 			}
 		}
 	}
-	
+
 	// Setup background image scaling
 	if( BgImage.Img!=None )
 	{
@@ -640,7 +640,7 @@ final protected function InitHTMLArea( Canvas C )
 			break;
 		}
 	}
-	
+
 	FontSize = -2;
 	if ( C.SizeY < 480 )
 		FontSize++;
@@ -726,7 +726,7 @@ final protected function InitHTMLArea( Canvas C )
 			}
 			Lines[i].XS = XS;
 			X+=XS;
-			
+
 			for( j=0; j<Lines[i].ImgList.Length; ++j )
 			{
 				z = Lines[i].ImgList[j];
@@ -801,7 +801,7 @@ function bool RenderHTMLText( canvas C )
 	{
 		C.SetPos(0,0);
 		C.DrawColor = BGColor;
-		
+
 		if( BgImage.Img!=None )
 		{
 			if( BgImage.Align==1 ) // not locked on screen.
@@ -876,7 +876,7 @@ function bool RenderHTMLText( canvas C )
 			continue;
 		if( C.CurY>C.ClipY )
 			break;
-		
+
 		// Check if mouse hovers over URL
 		if( bMouseOnClient && Lines[i].bHasURL && MX>=Lines[i].X && MX<=(Lines[i].X+Lines[i].XS)
 												&& MY>=Lines[i].Y && MY<=(Lines[i].Y+Lines[i].YS) )
@@ -913,7 +913,7 @@ function bool RenderHTMLText( canvas C )
 	C.OrgY = 0;
 	C.ClipX = CX;
 	C.ClipY = CY;
-	
+
 	return false;
 }
 
