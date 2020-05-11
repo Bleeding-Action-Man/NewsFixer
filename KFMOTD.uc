@@ -148,7 +148,7 @@ event Timer()
 
             NewsParse(page);
 
-            myMOTD = "|"$page;
+            myMOTD = "<br>"$page;
 
             HTMLText.SetContents(myMOTD);
 
@@ -177,7 +177,7 @@ function NewsParse(out string page)
     {
         ///////////////////////
         // Add Mut By
-        mutByMsg="- Fixed by: Vel-San<br>- HTML rendering by Marco<br><br>";
+        mutByMsg="<b>- Fixed by: Vel-San</b><br><b>- HTML rendering by Marco</b><br><br>";
         joinedMsg=mutByMsg$"(DOUBLE-CLICK A LINK TO OPEN IN BROWSER)<hr><br>";
         // Replace page <BODY>
         page = Repl(page, "<body>", joinedMsg, false);
@@ -241,7 +241,7 @@ defaultproperties
      b_QuickConnect=None
 
      ///////////////////////
-     myMOTD="||Retrieving Latest Updates From The Server"
+     myMOTD="<br><br>Retrieving Latest Updates From The Server"
      // Values from Vel-San -- Host Server & URL
      newsIPAddr="pastebin.com"
      getRequest="GET /raw/zZAKur74 HTTP/1.1" // Defaults to this if nothing set, official Announcements
