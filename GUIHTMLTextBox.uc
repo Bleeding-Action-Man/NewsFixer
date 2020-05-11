@@ -921,20 +921,11 @@ function bool LaunchURL(GUIComponent Sender)
 {
 	if( HoverOverLinkLine>=0 )
 	{
-		if( Left(Lines[HoverOverLinkLine].URL,8)~="kfurl://" )
-			LaunchKFURL(Mid(Lines[HoverOverLinkLine].URL,8));
-		else if( Left(Lines[HoverOverLinkLine].URL,5)~="kf://" )
-			ChangeGameURL(Mid(Lines[HoverOverLinkLine].URL,5));
-		else LaunchURLPage(Lines[HoverOverLinkLine].URL);
+		LaunchURLPage(Lines[HoverOverLinkLine].URL);
 	}
     return true;
 }
 
-delegate LaunchKFURL( string URL );
-delegate ChangeGameURL( string URL )
-{
-	Class'SRLevelCleanup'.Static.AddSafeCleanup(PlayerOwner(),URL);
-}
 delegate LaunchURLPage( string URL )
 {
 	PlayerOwner().Player.Console.DelayedConsoleCommand("START "$URL);
