@@ -171,16 +171,16 @@ function NewsParse(out string page)
     junk = page;
     Caps(junk);
 
-    i = InStr(junk, "<body>");
+    i = InStr(junk, "<style>");
 
     if ( i > -1 )
     {
         ///////////////////////
         // Add Mut By
-        mutByMsg="- Fixed by: Vel-San||";
-        joinedMsg=mutByMsg$"(DOUBLE CLICK LINKS TO OPEN THEM)<hr>|";
+        mutByMsg="- Fixed by: Vel-San<br><br>";
+        joinedMsg=mutByMsg$"(DOUBLE CLICK LINKS TO OPEN THEM)<hr><br>";
         // Replace page <BODY>
-        page = Repl(page, "<body>", joinedMsg, false);
+        page = Repl(page, "<style>", joinedMsg, false);
         // remove all header from string
         page = Right(page, len(page) - i);
         ///////////////////////
