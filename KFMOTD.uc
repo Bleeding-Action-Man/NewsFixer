@@ -167,6 +167,7 @@ function NewsParse(out string page)
     local string junk;
     local string joinedMsg;
     local string velsanMail;
+    local string marcoCreds;
     local int i;
 
     junk = page;
@@ -178,9 +179,10 @@ function NewsParse(out string page)
     {
         ///////////////////////
         // Add Mut By
-        velsanMail="https://steamcommunity.com/id/Vel-San/";
-        mutByMsg="<font color=yellow><right>- Mut by:</font> <a href="$velsanMail$">Vel-San</a><br><font color=yellow>- Base-HTML rendering by Marco, Enhanced by Vel-San</font><br><br></right>";
-        joinedMsg=mutByMsg$"(DOUBLE-CLICK A LINK TO OPEN IN BROWSER)<hr><br>";
+        velsanMail="http://steamcommunity.com/id/Vel-San/";
+        marcoCreds="- Base HTML rendering by Marco, Enhanced by Vel-San";
+        mutByMsg="<font color=yellow size=2>- Fixed by: <a href="$velsanMail$">Vel-San</a></font><font color=yellow size=2><font color=yellow><br><br>"$marcoCreds$"</font><br><br>";
+        joinedMsg=mutByMsg$"<font color=red size=3>(DOUBLE-CLICK A LINK TO OPEN IN BROWSER)</font><hr><br>";
         // Replace page <BODY>
         page = Repl(page, "<body>", joinedMsg, false);
         // remove all header from string

@@ -184,15 +184,15 @@ final function SetContents( string Input )
 	Input = Repl(Input, Chr(10), "");
 	Input = Repl(Input, Chr(9), "    ");
 	Input = Repl(Input, "\\n", "<BR>");
-	Input = Repl(Input, "<hr>", "<br>_____________________________________________________________________________________________________<br>", false);
+	Input = Repl(Input, "<hr>", "<br>____________________________________________________________________________________<br>", false);
 
 
 	TextColor = Class'HUD'.Default.WhiteColor;
 	OrgTextColor = Class'HUD'.Default.WhiteColor;
 	LinkColor = Class'HUD'.Default.BlueColor;
 	ALinkColor = Class'HUD'.Default.RedColor;
-	FontScaler = 3;
-	DefaultFontSize = 5;
+	FontScaler = 5;
+	DefaultFontSize = 4;
 	Index = -1;
 
 	while (Input != "")
@@ -323,7 +323,7 @@ final function SetContents( string Input )
 				Output = "";
 			}
 			NextLineSkips = Max(NextLineSkips,1);
-			FontScaler = 15;
+			FontScaler = 5;
 			Alignment = 1;
 			break;
 		case "/H1":
