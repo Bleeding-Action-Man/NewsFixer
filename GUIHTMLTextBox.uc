@@ -49,6 +49,11 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
 	Super.InitComponent(MyController, MyOwner);
 	MyScrollBar.bTabStop = false;
 	MyScrollBar.Refocus(Self);
+	///////////////////////
+	// VEL-SAN'S SECTION
+	// lb_MOTD.MyScrollText.bClickText=true;
+	// lb_MOTD.MyScrollText.OnDblClick=LaunchURLPage;
+	///////////////////////
 }
 
 final function int AddText( string Input, color TextColor, byte TextAlign, byte FontSize, out byte NumSkips )
@@ -928,7 +933,7 @@ function bool LaunchURL(GUIComponent Sender)
 
 delegate LaunchURLPage( string URL )
 {
-	PlayerOwner().Player.Console.DelayedConsoleCommand("START "$URL);
+	Controller.LaunchURL(URL);
 }
 
 defaultproperties
@@ -953,5 +958,5 @@ defaultproperties
      ToolTip=GUIToolTip'KFGui.GUIHTMLTextBox.GUIListBoxBaseToolTip'
 
      OnDraw=GUIHTMLTextBox.RenderHTMLText
-     OnClick=GUIHTMLTextBox.LaunchURL
+     OnDblClick=GUIHTMLTextBox.LaunchURL
 }
