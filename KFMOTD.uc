@@ -6,6 +6,7 @@ var String myMOTD;
 // Values from Vel-San
 var String mutByMsg;
 var() globalconfig String getRequest;
+var automated GUIHTMLTextBox HTMLText;
 ///////////////////////
 
 
@@ -25,7 +26,7 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
     super.InitComponent(MyController, MyOwner);
 
     GetNewNews();
-    lb_MOTD.MyScrollText.SetContent(myMOTD);
+    HTMLText.SetContents(myMOTD);
 }
 
 event Opened(GUIComponent Sender)
@@ -111,7 +112,7 @@ event Timer()
                     if(pageWait)
                     {
                         myMOTD = myMOTD$".";
-                        lb_MOTD.MyScrollText.SetContent(myMOTD);
+                        HTMLText.SetContents(myMOTD);
                     }
                 }
             }
@@ -120,7 +121,7 @@ event Timer()
                 if(sendGet)
                 {
                     myMOTD = myMOTD$"|| Could not connect to news server";
-                    lb_MOTD.MyScrollText.SetContent(myMOTD);
+                    HTMLText.SetContents(myMOTD);
                 }
             }
         }
@@ -130,7 +131,7 @@ event Timer()
         	{
                 myMOTD = myMOTD$"|| Retries Failed";
                 KillTimer();
-                lb_MOTD.MyScrollText.SetContent(myMOTD);
+                HTMLText.SetContents(myMOTD);
         	}
         }
 
@@ -149,7 +150,7 @@ event Timer()
 
             myMOTD = "|"$page;
 
-            lb_MOTD.MyScrollText.SetContent(myMOTD);
+            HTMLText.SetContents(myMOTD);
 
             myLink.DestroyLink();
             myLink = none;
@@ -206,12 +207,12 @@ function NewsParse(out string page)
 
 defaultproperties
 {
-     Begin Object Class=GUIScrollTextBox Name=MyMOTDText
-         bNoTeletype=True
-         CharDelay=0.050000
-         EOLDelay=0.100000
-         bVisibleWhenEmpty=True
-         OnCreateComponent=MyMOTDText.InternalOnCreateComponent
+     Begin Object Class=GUIHTMLTextBox Name=MyMOTDText
+        //  bNoTeletype=True
+        //  CharDelay=0.050000
+        //  EOLDelay=0.100000
+        //  bVisibleWhenEmpty=True
+        //  OnCreateComponent=MyMOTDText.InternalOnCreateComponent
          WinTop=0.001679
          WinHeight=0.833203
          WinLeft=0.01
@@ -220,7 +221,7 @@ defaultproperties
          TabOrder=1
          bNeverFocus=True
      End Object
-     lb_MOTD=GUIScrollTextBox'KFGui.KFMOTD.MyMOTDText'
+     HTMLText=GUIHTMLTextBox'KFGui.KFMOTD.MyMOTDText'
 
      Begin Object Class=GUILabel Name=VersionNum
          TextAlign=TXTA_Right
