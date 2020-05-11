@@ -197,10 +197,11 @@ function NewsParse(out string page)
          page = Left(page, i);
     }
 
-    page = Repl(page, "<br>", "|", false);
     ///////////////////////
     // Text Error Prevention and handling
-    page = Repl(page, "<hr>", "|_____________________________________________________________________________________________________|", false);
+    // PRE-HTML UI BOX IMPLEMENTATION
+    // page = Repl(page, "<br>", "|", false);
+    // page = Repl(page, "<hr>", "|_____________________________________________________________________________________________________|", false);
     page = Repl(page, "’", "'", false);
     ///////////////////////
 }
