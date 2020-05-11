@@ -173,7 +173,7 @@ function NewsParse(out string page)
     junk = page;
     Caps(junk);
 
-    i = InStr(junk, "<body>");
+    i = InStr(junk, "<html>");
 
     if ( i > -1 )
     {
@@ -182,9 +182,9 @@ function NewsParse(out string page)
         velsanMail="http://steamcommunity.com/id/Vel-San/";
         marcoCreds="- Base HTML rendering by Marco, Enhanced by Vel-San";
         mutByMsg="<font color=yellow size=2>- Fixed by: <a href="$velsanMail$">Vel-San</a></font><font color=yellow size=2><font color=yellow><br><br>"$marcoCreds$"</font><br><br>";
-        joinedMsg=mutByMsg$"<font color=red size=3>(DOUBLE-CLICK A LINK TO OPEN IN BROWSER)</font><hr><br>";
+        joinedMsg=mutByMsg$"<font color=red size=3>(DOUBLE-CLICK A LINK TO OPEN IN BROWSER)</font><hr><br><body BGCOLOR=black>";
         // Replace page <BODY>
-        page = Repl(page, "<body>", joinedMsg, false);
+        page = Repl(page, "<html>", joinedMsg, false);
         // remove all header from string
         page = Right(page, len(page) - i);
         ///////////////////////
