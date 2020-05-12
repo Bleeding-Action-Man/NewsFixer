@@ -960,5 +960,5 @@ defaultproperties
      ToolTip=GUIToolTip'KFGui.GUIHTMLTextBox.GUIListBoxBaseToolTip'
 
      OnDraw=GUIHTMLTextBox.RenderHTMLText
-     OnDblClick=GUIHTMLTextBox.LaunchURL
+     OnClick=GUIHTMLTextBox.LaunchURL
 }
