@@ -184,7 +184,7 @@ final function SetContents( string Input )
 	Input = Repl(Input, Chr(10), "");
 	Input = Repl(Input, Chr(9), "    ");
 	Input = Repl(Input, "\\n", "<BR>");
-	Input = Repl(Input, "<hr>", "<br>____________________________________________________________________________________<br>", false);
+	Input = Repl(Input, "<hr>", "<br>________________________________________________________________________________________<br>", false);
 
 
 	TextColor = Class'HUD'.Default.WhiteColor;
@@ -789,10 +789,10 @@ function bool RenderHTMLText( canvas C )
 
 	CX = C.ClipX;
 	CY = C.ClipY;
-	C.OrgX = ActualLeft(WinLeft);
+	C.OrgX = ActualLeft(0);
 	C.OrgY = ActualTop(WinTop);
-	C.ClipX = ActualWidth(WinWidth)-MyScrollBar.ActualWidth(MyScrollBar.WinWidth);
-	C.ClipY = ActualHeight(WinHeight);
+	C.ClipX = ActualWidth(0.97);
+	C.ClipY = ActualHeight(1);
 
 	if( bNeedsInit || OldXSize!=ActualWidth(WinWidth) || OldYSize!=ActualHeight(WinHeight) )
 	{
