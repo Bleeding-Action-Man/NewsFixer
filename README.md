@@ -1,2 +1,3 @@
-# news-fixer
-Fix 'News' section in KF, with a customizable domain.
+# KF-News Fixer
+
+Fix 'News' section in KF, with a customizable host for your news
