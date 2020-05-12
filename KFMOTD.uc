@@ -188,8 +188,8 @@ function NewsParse(out string page)
         marcoMail="http://steamcommunity.com/profiles/76561197975509070";
         velsanCreds="<font color=yellow size=2>- Fixed by: <a href="$velsanMail$">Vel-San</a></font>";
         marcoCreds="<font color=yellow size=2>- Base HTML Rendering Enhanced by Vel-San, Originally Created by <a href="$marcoMail$">Marco</a></font>";
-        urlNote="<font color=red size=3>(DOUBLE-CLICK A LINK TO OPEN IN BROWSER)</font><hr><br><body BGCOLOR=black>";
-        mutByMsg=velsanCreds$"<br><br>"$marcoCreds$"<br><br>";
+        urlNote="<hr><br><body BGCOLOR=black>";
+        mutByMsg=velsanCreds$"<br><br>"$marcoCreds$"<br>";
         joinedMsg=mutByMsg$urlNote;
         // Replace page <BODY>
         page = Repl(page, "<html>", joinedMsg, false);
