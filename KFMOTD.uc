@@ -6,6 +6,7 @@ var String myMOTD;
 // Values from Vel-San
 var String mutByMsg;
 var() globalconfig String getRequest;
+var() globalconfig String newsSource;
 var automated GUIHTMLTextBox HTMLText;
 ///////////////////////
 
@@ -27,6 +28,7 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
 
     GetNewNews();
     HTMLText.SetContents(myMOTD);
+    PanelCaption="News source: "$newsSource;
 }
 
 event Opened(GUIComponent Sender)
@@ -240,7 +242,7 @@ defaultproperties
      l_Version=GUILabel'KFGui.KFMOTD.VersionNum'
 
      VersionString="KF Version"
-     PanelCaption="News from Tripwire Interactive"
+     PanelCaption="News source: TRIPWIRE INTERACTIVE"
 
      b_QuickConnect=None
 
