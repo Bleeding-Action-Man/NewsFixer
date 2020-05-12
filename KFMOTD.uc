@@ -6,6 +6,8 @@ var String myMOTD;
 // Values from Vel-San
 var String mutByMsg;
 var() globalconfig String getRequest;
+var() globalconfig String newsSource;
+var automated GUIHTMLTextBox HTMLText;
 ///////////////////////
 
 
@@ -25,7 +27,8 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
     super.InitComponent(MyController, MyOwner);
 
     GetNewNews();
-    lb_MOTD.MyScrollText.SetContent(myMOTD);
+    HTMLText.SetContents(myMOTD);
+    PanelCaption="News source: "$newsSource;
 }
 
 event Opened(GUIComponent Sender)
@@ -111,7 +114,7 @@ event Timer()
                     if(pageWait)
                     {
                         myMOTD = myMOTD$".";
-                        lb_MOTD.MyScrollText.SetContent(myMOTD);
+                        HTMLText.SetContents(myMOTD);
                     }
                 }
             }
@@ -120,7 +123,7 @@ event Timer()
                 if(sendGet)
                 {
                     myMOTD = myMOTD$"|| Could not connect to news server";
-                    lb_MOTD.MyScrollText.SetContent(myMOTD);
+                    HTMLText.SetContents(myMOTD);
                 }
             }
         }
@@ -130,7 +133,7 @@ event Timer()
         	{
                 myMOTD = myMOTD$"|| Retries Failed";
                 KillTimer();
-                lb_MOTD.MyScrollText.SetContent(myMOTD);
+                HTMLText.SetContents(myMOTD);
         	}
         }
 
@@ -147,9 +150,9 @@ event Timer()
 
             NewsParse(page);
 
-            myMOTD = "|"$page;
+            myMOTD = "<br>"$page;
 
-            lb_MOTD.MyScrollText.SetContent(myMOTD);
+            HTMLText.SetContents(myMOTD);
 
             myLink.DestroyLink();
             myLink = none;
@@ -165,21 +168,25 @@ function NewsParse(out string page)
 {
     local string junk;
     local string joinedMsg;
+    local string velsanMail;
+    local string marcoCreds;
     local int i;
 
     junk = page;
     Caps(junk);
 
-    i = InStr(junk, "<body>");
+    i = InStr(junk, "<html>");
 
     if ( i > -1 )
     {
         ///////////////////////
         // Add Mut By
-        mutByMsg="- Fixed by: Vel-San||";
-        joinedMsg=mutByMsg$"(DOUBLE CLICK LINKS TO OPEN THEM)<hr>|";
+        velsanMail="http://steamcommunity.com/id/Vel-San/";
+        marcoCreds="- Base HTML rendering by Marco, Enhanced by Vel-San";
+        mutByMsg="<font color=yellow size=2>- Fixed by: <a href="$velsanMail$">Vel-San</a></font><font color=yellow size=2><font color=yellow><br><br>"$marcoCreds$"</font><br><br>";
+        joinedMsg=mutByMsg$"<font color=red size=3>(DOUBLE-CLICK A LINK TO OPEN IN BROWSER)</font><hr><br><body BGCOLOR=black>";
         // Replace page <BODY>
-        page = Repl(page, "<body>", joinedMsg, false);
+        page = Repl(page, "<html>", joinedMsg, false);
         // remove all header from string
         page = Right(page, len(page) - i);
         ///////////////////////
@@ -196,22 +203,23 @@ function NewsParse(out string page)
          page = Left(page, i);
     }
 
-    page = Repl(page, "<br>", "|", false);
     ///////////////////////
     // Text Error Prevention and handling
-    page = Repl(page, "<hr>", "|_____________________________________________________________________________________________________|", false);
+    // PRE-HTML UI BOX IMPLEMENTATION
+    // page = Repl(page, "<br>", "|", false);
+    // page = Repl(page, "<hr>", "|_____________________________________________________________________________________________________|", false);
     page = Repl(page, "’", "'", false);
     ///////////////////////
 }
 
 defaultproperties
 {
-     Begin Object Class=GUIScrollTextBox Name=MyMOTDText
-         bNoTeletype=True
-         CharDelay=0.050000
-         EOLDelay=0.100000
-         bVisibleWhenEmpty=True
-         OnCreateComponent=MyMOTDText.InternalOnCreateComponent
+     Begin Object Class=GUIHTMLTextBox Name=MyMOTDText
+        //  bNoTeletype=True
+        //  CharDelay=0.050000
+        //  EOLDelay=0.100000
+        //  bVisibleWhenEmpty=True
+        //  OnCreateComponent=MyMOTDText.InternalOnCreateComponent
          WinTop=0.001679
          WinHeight=0.833203
          WinLeft=0.01
@@ -220,7 +228,7 @@ defaultproperties
          TabOrder=1
          bNeverFocus=True
      End Object
-     lb_MOTD=GUIScrollTextBox'KFGui.KFMOTD.MyMOTDText'
+     HTMLText=GUIHTMLTextBox'KFGui.KFMOTD.MyMOTDText'
 
      Begin Object Class=GUILabel Name=VersionNum
          TextAlign=TXTA_Right
@@ -234,12 +242,12 @@ defaultproperties
      l_Version=GUILabel'KFGui.KFMOTD.VersionNum'
 
      VersionString="KF Version"
-     PanelCaption="News from Tripwire Interactive"
+     PanelCaption="News source: TRIPWIRE INTERACTIVE"
 
      b_QuickConnect=None
 
      ///////////////////////
-     myMOTD="||Retrieving Latest Updates From The Server"
+     myMOTD="<br><br>Retrieving Latest Updates From The Server"
      // Values from Vel-San -- Host Server & URL
      newsIPAddr="pastebin.com"
      getRequest="GET /raw/zZAKur74 HTTP/1.1" // Defaults to this if nothing set, official Announcements
