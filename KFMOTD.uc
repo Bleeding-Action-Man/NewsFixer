@@ -1,5 +1,5 @@
 class KFMOTD extends UT2K4Browser_MOTD
-  config(KFMOTD);
+  config(MOTD_Config);
 
 var String myMOTD;
 ///////////////////////
