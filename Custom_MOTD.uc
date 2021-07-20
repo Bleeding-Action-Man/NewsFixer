@@ -5,16 +5,6 @@ var String mutByMsg;
 var config String getRequest, newsSource, newsIPAddr;
 var automated GUIHTMLTextBox HTMLText;
 
-var String getResponse;
-
-var int		myRetryCount;
-var int		myRetryMax;
-
-var ROBufferedTCPLink myLink;
-var string LinkClassName;
-var bool sendGet;
-var bool pageWait;
-
 function InitComponent(GUIController MyController, GUIComponent MyOwner)
 {
   super.InitComponent(MyController, MyOwner);
@@ -177,7 +167,7 @@ function NewsParse(out string page)
     joinedMsg=mutByMsg$urlNote;
     // Replace page <BODY>
     page = Repl(page, "<html>", joinedMsg, false);
-    // remove all header from string
+    // Remove all header from string
     page = Right(page, len(page) - i);
   }
 
@@ -196,6 +186,9 @@ function NewsParse(out string page)
 
 defaultproperties
 {
+  VersionString="Game Version:"
+  myMOTD="Retrieving Latest Updates From The Server"
+
   Begin Object Class=GUIHTMLTextBox Name=MyMOTDText
     WinTop=0.001679
     WinHeight=0.833203
@@ -217,20 +210,4 @@ defaultproperties
     RenderWeight=20.700001
   End Object
   l_Version=GUILabel'KFGui.Custom_MOTD.VersionNum'
-
-  VersionString="KF Version"
-
-  b_QuickConnect=None
-
-  myMOTD="Retrieving Latest Updates From The Server"
-  // newsIPAddr="pastebin.com"
-  // getRequest="GET /raw/zZAKur74 HTTP/1.1" // Defaults to this if nothing set, official Announcements
-  // newsSource="TRIPWIRE INTERACTIVE"
-
-  ReReadyPause=0.250000
-  myRetryCount=0
-  myRetryMax=40
-
-  LinkClassName="ROInterface.ROBufferedTCPLink"
-  sendGet = true;
 }
