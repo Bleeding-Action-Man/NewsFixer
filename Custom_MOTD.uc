@@ -1,8 +1,10 @@
-class KFMOTD extends UT2K4Browser_MOTD
+class Custom_MOTD extends KFMOTD
   config(MOTD_Config);
 
+const VERSION = 31;
+
 var String mutByMsg;
-var config String newsIPAddr, getRequest, newsSource;
+var config String getRequest, newsSource, newsIPAddr;
 var automated GUIHTMLTextBox HTMLText;
 
 function InitComponent(GUIController MyController, GUIComponent MyOwner)
@@ -10,8 +12,64 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
   super.InitComponent(MyController, MyOwner);
 
   GetNewNews();
-  HTMLText.SetContents(myMOTD);
+  // HTMLText.SetContents(myMOTD); // Remove duplicate overlapping message
   PanelCaption="News source: "$newsSource;
+}
+
+event Opened(GUIComponent Sender)
+{
+  l_Version.Caption = "News Fixer:"@"v"$VERSION$" -- "$VersionString@"v"$PlayerOwner().Level.ROVersion;
+
+  super(Ut2k4Browser_Page).Opened(Sender);
+}
+
+protected function ROBufferedTCPLink CreateNewLink()
+{
+  local class<ROBufferedTCPLink> NewLinkClass;
+  local ROBufferedTCPLink NewLink;
+
+  if ( PlayerOwner() == None )
+    return None;
+
+  if ( LinkClassName != "" )
+  {
+    NewLinkClass = class<ROBufferedTCPLink>(DynamicLoadObject( LinkClassName, class'Class'));
+  }
+  if ( NewLinkClass != None )
+  {
+    NewLink = PlayerOwner().Spawn( NewLinkClass );
+  }
+
+  NewLink.ResetBuffer();
+
+  return NewLink;
+}
+
+
+function ReceivedMOTD(MasterServerClient.EMOTDResponse Command, string Data)
+{
+}
+
+function GetNewNews()
+{
+  if(myLink == None)
+  {
+    myLink = CreateNewLink();
+  }
+
+  if(myLink != None)
+  {
+    myLink.ServerIpAddr.Port = 0;
+
+    sendGet = true;
+    myLink.Resolve(newsIPAddr);  // NOTE: This is a non-blocking operation
+
+    SetTimer(ReReadyPause, true);
+  }
+  else
+  {
+    myMOTD = myMOTD$"|| myLink is None";
+  }
 }
 
 event Timer()
@@ -40,16 +98,8 @@ event Timer()
           if(pageWait)
           {
             myMOTD = myMOTD$".";
-            HTMLText.SetContents(myMOTD); // Modified for HTML Support
+            HTMLText.SetContents(myMOTD);
           }
-        }
-      }
-      else
-      {
-        if(sendGet)
-        {
-          myMOTD = myMOTD$"|| Could not connect to news server";
-          HTMLText.SetContents(myMOTD); // Modified for HTML Support
         }
       }
     }
@@ -59,7 +109,7 @@ event Timer()
       {
         myMOTD = myMOTD$"|| Retries Failed";
         KillTimer();
-        HTMLText.SetContents(myMOTD); // Modified for HTML Support
+        HTMLText.SetContents(myMOTD);
       }
     }
 
@@ -75,8 +125,10 @@ event Timer()
       }
 
       NewsParse(page);
-      myMOTD = "<br>"$page; // Added <br>
-      HTMLText.SetContents(myMOTD); // Modified for HTML Support
+
+      myMOTD = "<br>"$page;
+
+      HTMLText.SetContents(myMOTD);
 
       myLink.DestroyLink();
       myLink = none;
@@ -100,17 +152,16 @@ function NewsParse(out string page)
 
   if ( i > -1 )
   {
-    // Simple credits section, because why not xd
     velsanMail="http://steamcommunity.com/id/Vel-San/";
     marcoMail="http://steamcommunity.com/profiles/76561197975509070";
     velsanCreds="<font color=yellow size=2>- Fixed by: <a href="$velsanMail$">Vel-San</a></font>";
     marcoCreds="<font color=yellow size=2>- Base HTML Rendering Enhanced by Vel-San, Originally Created by <a href="$marcoMail$">Marco</a></font>";
-    urlNote="<hr><br><body BGCOLOR=black>";
-    mutByMsg=velsanCreds$"<br><br>"$marcoCreds$"<br>";
+    urlNote="<hr><body BGCOLOR=black>";
+    mutByMsg=velsanCreds$"<br>"$marcoCreds;
     joinedMsg=mutByMsg$urlNote;
     // Replace page <BODY>
     page = Repl(page, "<html>", joinedMsg, false);
-    // remove all header from string
+    // Remove all header from string
     page = Right(page, len(page) - i);
   }
 
@@ -124,26 +175,14 @@ function NewsParse(out string page)
     page = Left(page, i);
   }
 
-  // Text Error Prevention and handling
-  // PRE-HTML UI BOX IMPLEMENTATION
-  // page = Repl(page, "<br>", "|", false);
-  // page = Repl(page, "<hr>", "|_____________________________________________________________________________________________________|", false);
   page = Repl(page, "’", "'", false);
 }
 
 defaultproperties
 {
-  ////// Config Variables Default Values //////
-  // News Source text, shows at the top of the News Screen
-  // Customizable, defaults to TWI
-  newsSource="TRIPWIRE INTERACTIVE"
-  newsIPAddr="pastebin.com"
-  getRequest="GET /raw/zZAKur74 HTTP/1.1"
+  VersionString="KF:"
+  myMOTD="Retrieving Latest Updates From The Server..."
 
-  // Message that shows before loading the news
-  myMOTD="<br><br>Retrieving latest updates from the server..."
-
-  // HTML Text Box
   Begin Object Class=GUIHTMLTextBox Name=MyMOTDText
     WinTop=0.001679
     WinHeight=0.833203
@@ -153,5 +192,16 @@ defaultproperties
     TabOrder=1
     bNeverFocus=True
   End Object
-  HTMLText=GUIHTMLTextBox'KFGui.KFMOTD.MyMOTDText'
+  HTMLText=GUIHTMLTextBox'KFGui.Custom_MOTD.MyMOTDText'
+
+  Begin Object Class=GUILabel Name=VersionNum
+    TextAlign=TXTA_Right
+    StyleName="TextLabel"
+    WinTop=-0.043415
+    WinLeft=0.738500
+    WinWidth=0.252128
+    WinHeight=0.040000
+    RenderWeight=20.700001
+  End Object
+  l_Version=GUILabel'KFGui.Custom_MOTD.VersionNum'
 }

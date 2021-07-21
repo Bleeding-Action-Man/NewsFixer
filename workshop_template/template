@@ -1,0 +1,47 @@
+This fix revives the 'News' tab that's been broken for years now; It will automatically get latest updates as long as the source is updated.
+
+You can also add a custom news source for yourself! Example:
+
+You run a clan and have your own servers, so, you can host your own page with latest news and everyone who sets the Host in their MOTD_Config.ini; That's it!
+
+Instructions are in the .ini but i will make a clear guide on how to write your own news, because some limitations in the game do not allow normal HTML format and it can be a little tricky to do so
+
+[h1][b][u]Credits[/u][/b][/h1]
+
+- Me
+- [b]Marco[/b] for the base HTML render, but I fixed and improved things in it, and integrated it with the News tab
+
+[h1][b][u]Number Of Files[/u][/b][/h1]
+
+2
+
+[h1][b][u]File Names[/u][/b][/h1]
+
+\System\KFGui.u
+\System\MOTD_Config.ini
+
+[h1][b][u]Usage[/u][/b][/h1]
+
+[b]MAKE A BACKUP OF YOUR KFGui.U FIRST[/b]
+
+1- Subscribe or download manually
+2- Launch the game and wait to see 'Completed'
+3- Restart the game and check your news tab
+
+[h1][b][u]Manual Download Links (Recommended)[/u][/b][/h1]
+
+https://github.com/Bleeding-Action-Man/NewsFixer/releases/tag/v3.0
+
+[h1][b][u]Notes & Known Bugs[/u][/b][/h1]
+
+- [i](note)[/i] Latest version is v3.0 (same as v2.1 but it's Whitelisted now)
+- [strike][i](limitation)[/i] This is [b]NOT[/b] Whitelisted.[/strike] [b]THIS IS NOW WHITELISTED[/b]
+- [i](workaround)[/i] If you are inserting URLs, please put them as HTTP, they will automatically be converted to HTTPs
+- [i](bug)[/i] Clicking on the screen then trying to see the hover text over URLs again doesn't work, you will have to switch tabs e.g Click on any other tab than news, then go back to news and it should work fine
+
+[h1][b][u]Call for help or contribution[/u][/b][/h1]
+
+I am very welcome to anyone who wants to contribute and remove the limitations stated above, or introduce any fixes! I need assistance with:
+
+- Changing the logic of this fix, instead of replaceing KFGui.u
+- Possibly creation of a mutator for it
