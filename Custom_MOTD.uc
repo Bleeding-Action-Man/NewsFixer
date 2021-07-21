@@ -1,6 +1,8 @@
 class Custom_MOTD extends KFMOTD
   config(MOTD_Config);
 
+const VERSION = 31;
+
 var String mutByMsg;
 var config String getRequest, newsSource, newsIPAddr;
 var automated GUIHTMLTextBox HTMLText;
@@ -10,13 +12,13 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
   super.InitComponent(MyController, MyOwner);
 
   GetNewNews();
-  HTMLText.SetContents(myMOTD);
+  // HTMLText.SetContents(myMOTD); // Remove duplicate overlapping message
   PanelCaption="News source: "$newsSource;
 }
 
 event Opened(GUIComponent Sender)
 {
-  l_Version.Caption = VersionString@PlayerOwner().Level.ROVersion;
+  l_Version.Caption = "News Fixer:"@"v"$VERSION$" -- "$VersionString@"v"$PlayerOwner().Level.ROVersion;
 
   super(Ut2k4Browser_Page).Opened(Sender);
 }
@@ -100,14 +102,6 @@ event Timer()
           }
         }
       }
-      else
-      {
-        if(sendGet)
-        {
-          myMOTD = myMOTD$"|| Could not connect to news server";
-          HTMLText.SetContents(myMOTD);
-        }
-      }
     }
     else
     {
@@ -162,8 +156,8 @@ function NewsParse(out string page)
     marcoMail="http://steamcommunity.com/profiles/76561197975509070";
     velsanCreds="<font color=yellow size=2>- Fixed by: <a href="$velsanMail$">Vel-San</a></font>";
     marcoCreds="<font color=yellow size=2>- Base HTML Rendering Enhanced by Vel-San, Originally Created by <a href="$marcoMail$">Marco</a></font>";
-    urlNote="<hr><br><body BGCOLOR=black>";
-    mutByMsg=velsanCreds$"<br><br>"$marcoCreds$"<br>";
+    urlNote="<hr><body BGCOLOR=black>";
+    mutByMsg=velsanCreds$"<br>"$marcoCreds;
     joinedMsg=mutByMsg$urlNote;
     // Replace page <BODY>
     page = Repl(page, "<html>", joinedMsg, false);
@@ -186,8 +180,8 @@ function NewsParse(out string page)
 
 defaultproperties
 {
-  VersionString="Game Version:"
-  myMOTD="Retrieving Latest Updates From The Server"
+  VersionString="KF:"
+  myMOTD="Retrieving Latest Updates From The Server..."
 
   Begin Object Class=GUIHTMLTextBox Name=MyMOTDText
     WinTop=0.001679
