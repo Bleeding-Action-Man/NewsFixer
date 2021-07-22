@@ -30,12 +30,10 @@ Instructions are in the .ini but i will make a clear guide on how to write your 
 
 [h1][b][u]Manual Download Links (Recommended)[/u][/b][/h1]
 
-https://github.com/Bleeding-Action-Man/NewsFixer/releases/tag/v3.0
+https://github.com/Bleeding-Action-Man/NewsFixer/releases/tag/v3.1
 
 [h1][b][u]Notes & Known Bugs[/u][/b][/h1]
 
-- [i](note)[/i] Latest version is v3.0 (same as v2.1 but it's Whitelisted now)
-- [strike][i](limitation)[/i] This is [b]NOT[/b] Whitelisted.[/strike] [b]THIS IS NOW WHITELISTED[/b]
 - [i](workaround)[/i] If you are inserting URLs, please put them as HTTP, they will automatically be converted to HTTPs
 - [i](bug)[/i] Clicking on the screen then trying to see the hover text over URLs again doesn't work, you will have to switch tabs e.g Click on any other tab than news, then go back to news and it should work fine
 
